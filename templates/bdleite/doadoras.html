@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block breadcrumb %}
+    <ol class="breadcrumb my-0 ms-2">
+        <li class="breadcrumb-item">
+            <span>Doadoras</span>
+        </li>
+    </ol>
+{% endblock %}
+{% block content %}
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <a href="{% url 'adicionar-doadora' %}"> <button type="button" class="btn btn-outline-primary"><i class="fa-solid fa-user-plus">  ADD</i></button>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+{#    <div class="row">#}
+{#        <div class="col">#}
+{#            <div class="card">#}
+{#                <div class="card-body">#}
+{#                    <input class="form-control" type="text" value="Pesquise pela doadora..."#}
+{#                           aria-label="readonly input example"#}
+{#                           readonly>#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#        </div>#}
+{##}
+{#    </div>#}
+    <div class="row">
+        <div class="col">
+
+            <div class="card">
+                <div class="card-body">
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Ultima Doação</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for doadora in doadoras %}
+                        <tr>
+                            <th scope="row">{{doadora.id}}</th>
+                            <td><a href="{% url 'informacao-doadora' doadora.id %}"> {{ doadora.nome}}</a></td>
+                            <td>{{ doadora.ultima_doacao}}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

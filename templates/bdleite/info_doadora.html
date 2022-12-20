@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block breadcrumb %}
+    <ol class="breadcrumb my-0 ms-2">
+        <li class="breadcrumb-item">
+            <span><a href="{% url 'listar-doadoras' %}"> Doadoras</a></span>
+        </li>
+        <li class="breadcrumb-item active"><span>Infomações Doadora</span></li>
+    </ol>
+{% endblock %}
+{% block content %}
+    <h1>INFO DOADORA {{ id }}</h1>
+{% endblock %}
