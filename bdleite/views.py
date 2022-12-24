@@ -8,6 +8,8 @@ from django.shortcuts import render, redirect
 from django.template import loader
 from django.contrib import messages
 
+from bdleite.models import Doadora
+
 
 # Create your views here.
 def login(request):
@@ -49,11 +51,7 @@ def home(request):
 def doadoras(request):
     template = loader.get_template('bdleite/doadoras.html')
 
-    doadoras = [
-        {"id":1,"nome":"Maria das Graças", "ultima_doacao":datetime.datetime.now()},
-        {"id":2,"nome":"Josefa de limas", "ultima_doacao":datetime.datetime.now()},
-        {"id":3,"nome":"Severina Algusta", "ultima_doacao":datetime.datetime.now()}
-    ]
+    doadoras = Doadora.objects.all()
     context = {
         'doadoras': doadoras,
     }
@@ -77,9 +75,13 @@ def edit_doadora(request, id_doadora):
 
 @login_required
 def info_doadora(request, id_doadora):
+
+    doadora = Doadora.objects.get(id=id_doadora)
+
+
     template = loader.get_template('bdleite/info_doadora.html')
     context = {
-        'id': id_doadora,
+        'doadora': doadora,
     }
     return HttpResponse(template.render(context, request))
 

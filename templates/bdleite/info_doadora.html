@@ -8,5 +8,22 @@
     </ol>
 {% endblock %}
 {% block content %}
-    <h1>INFO DOADORA {{ id }}</h1>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title"><h1>{{ doadora }} {{ doadora.sobrenome }}</h1></h5>
+
+            <dl class="row">
+                <dt class="col-sm-3">Contato</dt>
+                <dd class="col-sm-9">{{ doadora.contato.telefone }} / {{ doadora.contato.celular }}</dd>
+                <dt class="col-sm-3">Endereco</dt>
+                <dd class="col-sm-9">{{ doadora.endereco.endereco }}, {{ doadora.endereco.cidade }}-{{ doadora.endereco.estado }}, {{ doadora.endereco.cep }}</dd>
+            </dl>
+
+            <div class="col-12">
+                <a href="{% url 'listar-doadoras' %}">
+                    <button type="button" class="btn btn-danger">VOLTAR</button>
+                </a>
+            </div>
+        </div>
+    </div>
 {% endblock %}
