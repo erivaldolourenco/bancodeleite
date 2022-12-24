@@ -53,7 +53,7 @@
                         {% for doadora in doadoras %}
                         <tr>
                             <th scope="row">{{doadora.id}}</th>
-                            <td><a href="{% url 'informacao-doadora' doadora.id %}"> {{ doadora.nome}}</a></td>
+                            <td><a href="{% url 'informacao-doadora' doadora.id %}"> {{ doadora.nome}} {{ doadora.sobrenome}}</a></td>
                             <td>{{ doadora.ultima_doacao}}</td>
                         </tr>
                         {% endfor %}

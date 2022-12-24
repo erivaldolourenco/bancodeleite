@@ -14,17 +14,18 @@ def rename_img_profile(instance, filename):
     return os.path.join(path, file_name)
 
 class Endereco(models.Model):
-    endereco = models.CharField(max_length=200)
+    rua = models.CharField(max_length=200)
+    bairro = models.CharField(max_length=100)
     cidade = models.CharField(max_length=50)
     estado = models.CharField(max_length=30)
     cep = models.CharField(max_length=10)
     def __str__(self):
-        return self.cep
+        return str(self.cep)
 class Contato(models.Model):
     telefone = models.CharField(max_length=11,null=True, blank=True)
     celular = models.CharField(max_length=11,null=True, blank=True)
     def __str__(self):
-        return self.telefone
+        return str(self.telefone)
 
 class Doadora(models.Model):
     nome = models.CharField(max_length=200)
@@ -32,7 +33,7 @@ class Doadora(models.Model):
     endereco = models.ForeignKey(Endereco,null=True, blank=True, on_delete=models.SET_NULL)
     contato = models.ForeignKey(Contato,null=True, blank=True, on_delete=models.SET_NULL)
     def __str__(self):
-        return self.nome
+        return str(self.nome)
 
 class Funcionario(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

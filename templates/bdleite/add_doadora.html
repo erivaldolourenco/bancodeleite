@@ -2,51 +2,53 @@
 {% block breadcrumb %}
     <ol class="breadcrumb my-0 ms-2">
         <li class="breadcrumb-item">
-            <span><a href="{% url 'listar-doadoras' %}" >Doadoras</a></span>
+            <span><a href="{% url 'listar-doadoras' %}">Doadoras</a></span>
         </li>
         <li class="breadcrumb-item active"><span>Adicionar Doadora</span></li>
     </ol>
 {% endblock %}
 {% block content %}
+
     <div class="card">
         <div class="card-header"><h4>Nova Doadora</h4></div>
         <div class="card-body">
-            <form class="row g-3">
+            <form class="row g-3" action="{% url 'adicionar-doadora' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
                 <div class="col-md-4">
-                    <label for="inputEmail4" class="form-label">Nome</label>
-                    <input type="text" class="form-control" id="inputEmail4">
+                    <label for="inputEmail4" class="form-label">{{ form_doadora.nome.label }}</label>
+                    {{ form_doadora.nome }}
                 </div>
                 <div class="col-md-8">
-                    <label for="inputPassword4" class="form-label">Sobrenome</label>
-                    <input type="text" class="form-control" id="inputPassword4">
-                </div>
-                   <div class="col-md-6">
-                    <label for="inputPassword4" class="form-label">Telefone</label>
-                    <input type="text" class="form-control" id="inputPassword4">
-                </div>
-                   <div class="col-md-6">
-                    <label for="inputPassword4" class="form-label">Celular</label>
-                    <input type="text" class="form-control" id="inputPassword4">
-                </div>
-
-                <div class="col-12">
-                    <label for="inputAddress" class="form-label">Endereco</label>
-                    <input type="text" class="form-control" id="inputAddress" placeholder="Av. Maceio, 344">
+                    <label for="inputPassword4" class="form-label">{{ form_doadora.sobrenome.label }}</label>
+                    {{ form_doadora.sobrenome }}
                 </div>
                 <div class="col-md-6">
-                    <label for="inputCity" class="form-label">Cidade</label>
-                    <input type="text" class="form-control" id="inputCity">
+                    <label for="inputPassword4" class="form-label">{{ form_contato.telefone.label }}</label>
+                    {{ form_contato.telefone }}
+                </div>
+                <div class="col-md-6">
+                    <label for="inputPassword4" class="form-label">{{ form_contato.celular.label }}</label>
+                    {{ form_contato.celular }}
+                </div>
+
+                <div class="col-8">
+                    <label for="inputAddress" class="form-label">{{ form_endereco.rua.label }}</label>
+                    {{ form_endereco.rua }}
+                </div>
+                <div class="col-4">
+                    <label for="inputAddress" class="form-label">{{ form_endereco.bairro.label }}</label>
+                    {{ form_endereco.bairro }}
+                </div>
+                <div class="col-md-6">
+                    <label for="inputCity" class="form-label">{{ form_endereco.cidade.label }}</label>
+                    {{ form_endereco.cidade }}
                 </div>
                 <div class="col-md-4">
-                    <label for="inputState" class="form-label">Estado</label>
-                    <select id="inputState" class="form-select">
-                        <option selected>Alagoas</option>
-                        <option>Pernambuco</option>
-                    </select>
+                    <label for="inputState" class="form-label">{{ form_endereco.estado.label }}</label>
+                    {{ form_endereco.estado }}
                 </div>
                 <div class="col-md-2">
-                    <label for="inputZip" class="form-label">CEP</label>
-                    <input type="text" class="form-control" id="inputZip">
+                    <label for="inputZip" class="form-label">{{ form_endereco.cep.label }}</label>
+                    {{ form_endereco.cep }}
                 </div>
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary">SALVAR</button>
@@ -54,6 +56,8 @@
                         <button type="button" class="btn btn-danger">CANCELAR</button>
                     </a></div>
             </form>
+
+
         </div>
     </div>
 

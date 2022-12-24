@@ -8,7 +8,8 @@ from django.shortcuts import render, redirect
 from django.template import loader
 from django.contrib import messages
 
-from bdleite.models import Doadora
+from bdleite.forms import DoadoraForm, EnderecoForm, ContatoForm
+from bdleite.models import Doadora, Endereco, Contato, Funcionario
 
 
 # Create your views here.
@@ -59,11 +60,46 @@ def doadoras(request):
 
 @login_required
 def add_doadora(request):
-    template = loader.get_template('bdleite/add_doadora.html')
-    context = {
-        'teste': 'teste',
-    }
-    return HttpResponse(template.render(context, request))
+    if request.method == 'POST':
+        doadora = Doadora()
+        endereco = Endereco()
+        contato = Contato()
+        form_doadora = DoadoraForm(request.POST, request.FILES, instance=doadora)
+        form_endereco = EnderecoForm(request.POST, request.FILES, instance=endereco)
+        form_contato = ContatoForm(request.POST, request.FILES, instance=contato)
+        if form_doadora.is_valid() and form_endereco.is_valid() and form_contato.is_valid():
+            doadora = form_doadora.save(commit=True)
+            doadora.endereco = form_endereco.save(commit=True)
+            doadora.contato = form_contato.save(commit=True)
+            doadora.save()
+            messages.add_message(
+                request, messages.SUCCESS, 'Doadora '+str(doadora.nome)+' adicionado com sucesso',
+                fail_silently=True,
+            )
+            return redirect('/doadoras')
+        else:
+            messages.add_message(
+                request, messages.ERROR, 'Formulario contem erros',
+                fail_silently=True,
+            )
+            context = {
+                'form_doadora': form_doadora,
+                'form_endereco': form_endereco,
+                'form_contato': form_contato,
+            }
+            return render(request, 'bdleite/add_doadora.html', context)
+
+    else:
+        form_doadora = DoadoraForm()
+        form_endereco = EnderecoForm()
+        form_contato = ContatoForm()
+
+        context = {
+            'form_doadora': form_doadora,
+            'form_endereco': form_endereco,
+            'form_contato': form_contato,
+        }
+    return render(request, 'bdleite/add_doadora.html', context)
 
 @login_required
 def edit_doadora(request, id_doadora):
@@ -87,9 +123,10 @@ def info_doadora(request, id_doadora):
 
 @login_required
 def funcionarios(request):
+    funcionarios = Funcionario.objects.all()
     template = loader.get_template('bdleite/funcionarios.html')
     context = {
-        'teste': 'teste',
+        'funcionarios': funcionarios,
     }
     return HttpResponse(template.render(context, request))
 
